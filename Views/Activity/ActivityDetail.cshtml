@@ -1,0 +1,17 @@
+<a href="/dashboard">Dashboard</a> | <a href="Logout">Logout</a>
+<hr>
+<h2> @ViewBag.ShowOne.Title </h2> <br>
+<h3> Here is information about Activity</h3>
+<h3 style="color:grey">Location: @ViewBag.ShowOne.Description</h3>
+<h3 style="color:grey"> Date: @ViewBag.ShowOne.Date.ToString("MM dd yyyy")</h3>
+
+<h4 style="color:blue">Participants:</h4>
+@{ 
+    <ul>
+        @foreach (var h in @ViewBag.ShowOne.guest)
+        {
+            <li>@h.User.FirstName @h.User.LastName</li>
+        }
+    </ul>
+}
+

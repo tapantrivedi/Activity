@@ -1,0 +1,68 @@
+@using Activity.Models
+@model List<ActivitySchedule>
+<html>
+    <head>
+    
+    </head>
+    <body>
+        <h2>DOJO Activity Center</h2>
+        <h3>Welcome <span style="color:red">@ViewBag.firstname @ViewBag.lastname!</span> to the Dojo Activity</h3> | <a href="/logout">Logoff</a> 
+        
+        <hr>
+        <a href="/newActivityPage">New Wedding</a>
+        <hr>
+        <h3> Note: Please click on Join button to join and same button to Unjoin</h3>
+        <h4> Note: If you did not create activity you can not delete it</h4>
+
+        
+        <table border= "1" >
+            <tr>
+                <th>Activity</th>
+                <th>Date And Time</th>
+                <th>Duration</th>
+                <th>Number of Participants</th>
+                <th>Created By</th>
+                <th>Actions</th>
+            </tr>
+            @{
+                foreach (var w in @Model)
+                {
+                <tr>
+                    <td><a href="/activityDetailPage/@w.ActivityId">@w.Title  </a></td>
+                    <td>@w.Date.ToString("MM/dd")& @w.Time </td>
+                    <td>@w.Duration</td> 
+                    <td>@w.guest.Count</td>
+                    <td>@ViewBag.firstname</td>
+                    
+                    <td> 
+                        
+                            @{
+                                var count =0;
+                                foreach (var g in @w.guest)
+                                {
+                                    if(@ViewBag.UserId == g.UserId)
+                                    {
+                                        count++;
+                                    }
+                                }
+                            
+                                if(count ==0)
+                                {
+                                    <a class="btn btn-success" href="/rsvp/@w.ActivityId">Join</a>
+                                }
+                                else
+                                {
+                                    <a class="btn btn-danger" href="/rsvp/@w.ActivityId">Leave</a>
+                                }
+                            }
+                            @if(@ViewBag.UserId == @w.UserId)
+                            { 
+                            <a href="/deleteWed/@w.ActivityId"> | Delete | </a>
+                            }
+                        
+                    </td>
+                    </tr>
+                }
+            }
+    </body>
+    </html>
